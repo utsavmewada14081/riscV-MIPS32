@@ -5,7 +5,7 @@ MIPS is 32-bit processor. MIPS32 registers: 32, 32-bit general purpose registers
 The design consists of addressing modes such as Register, Immediate, Base addressing, PC relative and Pseudo-direct. Only load and store instructions can access memory. Assuming memory word size is 32 bits and is word addressable.
 
 <h2>Instruction subset considered for design</h2>
-<h3>Load and store instructions: </h3>
+<h3>Load and store instructions</h3>
 LW R2, 124(R8)
 SW R5, -10(R25)
 
