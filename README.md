@@ -1,17 +1,15 @@
 <h1>RISCV MIPS32 processor pipeline implementation</h1>
 
-MIPS is 32-bit processor
+MIPS is 32-bit processor. MIPS32 registers: 32, 32-bit general purpose registers and a special purpose 32-bit register program counter (PC). A program counter points to the next instruction in memory to be fetched and executed.
 
-MIPS32 registers: 32, 32-bit general purpose registers and a special purpose 32-bit register program counter (PC). 
-A program counter points to the next instruction in memory to be fetched and executed.
+The design consists of addressing modes such as Register, Immediate, Base addressing, PC relative and Pseudo-direct. Only load and store instructions can access memory. Assuming memory word size is 32 bits and is word addressable.
 
-The design consists of addressing modes such as Register, Immediate, Base addressing, PC relative and Pseudo-direct. Only load and store instructions can access memory.
-Assuming memory word size is 32 bits and is word addressable
-
-Instruction subset considered for design:
-Load and store instructions: LW R2, 124(R8)
+<h2>Instruction subset considered for design</h2>
+<h3>Load and store instructions: </h3>
+LW R2, 124(R8)
 SW R5, -10(R25)
-Arithmetic and logical instructions(only register operands)
+
+<h3>Arithmetic and logical instructions(only register operands)</h3>
 ADD R1, R2, R3
 ADD R1, R2, R0 //R0 register for 0
 SUB R12, R10, R8
@@ -20,25 +18,33 @@ OR R11, R5, R6
 MUL R5, R6, R7
 SLT R5, R11, R12
 
-Immediate Insructions
+<h3>Immediate Insructions</h3>
 ADDI R1, R2, 25
 SUBI R5, R1, 150
 SLTI R2, R10, 10
 
-Branch instructions
+<h3>Branch instructions</h3>
 BEQZ R1, Loop
 BNEQZ R5, Label
 
-Jump instructions
+<h3>Jump instructions</h3>
 J Loop
 
-Miscellaneous Instructions
+<h3>Miscellaneous Instructions</h3>
 HLT      //Halt
 
 3 types of instructions R-type, I-type and J-type
 Note: all instructions may not use all fields
 
 R-type:
+<table>
+  <th>31     26</th>
+  <th>25     21</th>
+  <th>20     16</th>
+  <th>15     11</th>
+  <th>10      6</th>
+  <th>5      0</th>
+</table>
 31     26 25    21 20     16 15     11 10     6 5           0
   opcode     rs        rt        rd      shamt      funct
 
