@@ -38,12 +38,12 @@ Note: all instructions may not use all fields
 
 R-type:
 <table>
-  <th>31  &#9   26</th>
-  <th>25     21</th>
-  <th>20     16</th>
-  <th>15     11</th>
-  <th>10      6</th>
-  <th>5      0</th>
+  <th>31-----26</th>
+  <th>25-----21</th>
+  <th>20-----16</th>
+  <th>15-----11</th>
+  <th>10-----6</th>
+  <th>5-----0</th>
   <tr>
     <td>opcode</td>
   <td>rs</td>
@@ -52,51 +52,133 @@ R-type:
   <td>shamt</td>
   <td>funct</td>
   </tr>
-  
 </table>
-31     26 25    21 20     16 15     11 10     6 5           0
-  opcode     rs        rt        rd      shamt      funct
 
-Instruction opcode (6 bits)
-ADD 000000
-SUB 000001
-AND 000010
-OR 000011
-SLT 000100
-MUL 000101
-HLT 111111
+<table>
+  <th>
+    Instruction
+  </th>
+  <th>
+    opcode
+  </th>
+  <tr>
+    <td>ADD</td>
+    <td>000000</td>
+  </tr>
+  <tr>
+    <td>SUB</td>
+    <td>000001</td>
+  </tr>
+  <tr>
+    <td>AND</td>
+    <td>000010</td>
+  </tr>
+  <tr>
+    <td>OR</td>
+    <td>000011</td>
+  </tr>
+  <tr>
+    <td>SLT</td>
+    <td>000100</td>
+  </tr>
+  <tr>
+    <td>MUL</td>
+    <td>000101</td>
+  </tr>
+  <tr>
+    <td>HLT</td>
+    <td>111111</td>
+  </tr>
+</table>
+
   
 I-type: It contains a 16-bit immediate data
-31     26 25    21 20     16 15                             0
-  opcode     rs        rt             immediate data
+<table>
+  <th>31-----26</th>
+  <th>25-----21</th>
+  <th>20-----16</th>
+  <th>15-----0</th>
+  <tr>
+    <td>opcode</td>
+  <td>rs</td>
+  <td>rt</td>
+  <td>immediate data</td>
+  </tr>
+</table>
 
-Instruction opcode (6 bits)
-LW 001000
-SW 001001
-ADDI 001010
-SUBI 001011
-SLTI 001100
-BNEQZ 001101
-BEQZ 001110
-  
+<table>
+  <th>
+    Instruction
+  </th>
+  <th>
+    opcode
+  </th>
+  <tr>
+    <td>LW</td>
+    <td>001000</td>
+  </tr>
+  <tr>
+    <td>SW</td>
+    <td>001001</td>
+  </tr>
+  <tr>
+    <td>ADDI</td>
+    <td>001010</td>
+  </tr>
+  <tr>
+    <td>SUBI</td>
+    <td>001011</td>
+  </tr>
+  <tr>
+    <td>SLTI</td>
+    <td>001100</td>
+  </tr>
+  <tr>
+    <td>BNEQZ</td>
+    <td>001101</td>
+  </tr>
+  <tr>
+    <td>BEQZ</td>
+    <td>001110</td>
+  </tr>
+</table>
+
 J-type: It contains a 26-bit jump address field
-31     26 25                                                 0
-  opcode           immediate data (26 bit jump address)
+ <table>
+  <th>31-----26</th>
+  <th>25-----0</th>
+  <tr>
+    <td>opcode</td>
+  <td>immediate data (26 bit jump address)</td>
+  </tr>
+</table>
+
 
 Instruction opcode (6 bits)
-J 010000
+<table>
+  <th>
+    Instruction
+  </th>
+  <th>
+    opcode
+  </th>
+  <tr>
+    <td>J</td>
+    <td>010000</td>
+  </tr>
+</table>
 
 16-bit and 26-bit immediate data are retrieved and sign extended to 32-bits. In 16-bit the MSB (15) is extended upto bit 31 and in 26-bit the MSB (25) is extended upto bit 31.
 
-THe instruction cycle is divided into five stages:
+The instruction cycle is divided into five stages:
 IF (Instruction Fetch), ID (Instruction Decode/Register Fetch), EX (Execution/Effective Address Calculation), MEM (Memory Access/Branch Completion), WB (Register write-back)
 
-IF:
+<h3>IF</h3>
 Instruction pointed to by PC is fetched from memory and also the next value is computed. For a branch instruction, new value of the PC may be the target address. So PC is not updated in this stage, new value is stored in a register NPC.
 IR <- Mem[PC];
 NPC <- PC+1;
 
-ID: 
+<h3>ID</h3>
 Instruction fetched in IR is decoded
 Decoding is done in parallel with reading the register operands rs and rt, similarly the immediate data are sign-extended
 A <-Reg[rs];
@@ -104,7 +186,7 @@ B <- Reg[rt];
 Imm <- (IR15)16 IR[15:0]
 Imm1 <- (IR25)16 IR[25:0]
 
-EX:
+<h3>EX</h3>
 Exact operation depends on the instruction that is already decoded
 ALU operated on operands that have already made ready in the previous cycle.
 Memory reference:
@@ -117,23 +199,22 @@ Branch:
 ALUOut <- NPC+Imm;
 cond <- (A op 0);
 
-MEM:
+<h3>MEM</h3>
 Load, store and branch instructions make use of this stage
 Load and store instructions access the memory, the branch instruction updates PC depending upon the outcome of the branch condition
 
-Load: 
+<h3>Load</h3>
 PC <- NPC;
 LMD <- Mem[ALUOut];
 
-Store:
+<h3>Store</h3>
 PC <- NPC;
 Mem[ALUOut] <- B;
 
-Branch:
+<h3>Branch</h3>
 if(cond) PC <- ALUOut;
 else PC <- NPC:
 
-WB:
+<h3>WB</h3>
 Result may come from ALU or from memory system(a LOAD instruction)
 Register-Register ALU Instruction: Reg[rd] <- ALUOut;
-
