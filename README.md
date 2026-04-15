@@ -153,8 +153,6 @@ J-type: It contains a 26-bit jump address field
   </tr>
 </table>
 
-
-Instruction opcode (6 bits)
 <table>
   <th>
     Instruction
