@@ -44,11 +44,14 @@ R-type:
   <th>15     11</th>
   <th>10      6</th>
   <th>5      0</th>
-  <tr>opcode</tr>
-  <tr>rs</tr>
-  <tr>rt</tr>
-  <tr>shamt</tr>
-  <tr>funct</tr>
+  <tr>
+    <td>opcode</td>
+  <td>rs</td>
+  <td>rt</td>
+  <td>shamt</td>
+  <td>funct</td>
+  </tr>
+  
 </table>
 31     26 25    21 20     16 15     11 10     6 5           0
   opcode     rs        rt        rd      shamt      funct
