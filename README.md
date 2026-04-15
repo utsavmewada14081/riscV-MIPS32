@@ -1,4 +1,4 @@
-RISCV MIPS32 processor pipeline implementation
+<h1>RISCV MIPS32 processor pipeline implementation</h1>
 
 MIPS is 32-bit processor
 
@@ -105,4 +105,20 @@ cond <- (A op 0);
 MEM:
 Load, store and branch instructions make use of this stage
 Load and store instructions access the memory, the branch instruction updates PC depending upon the outcome of the branch condition
+
+Load: 
+PC <- NPC;
+LMD <- Mem[ALUOut];
+
+Store:
+PC <- NPC;
+Mem[ALUOut] <- B;
+
+Branch:
+if(cond) PC <- ALUOut;
+else PC <- NPC:
+
+WB:
+Result may come from ALU or from memory system(a LOAD instruction)
+Register-Register ALU Instruction: Reg[rd] <- ALUOut;
 
