@@ -38,7 +38,7 @@ Note: all instructions may not use all fields
 
 R-type:
 <table>
-  <th>31     26</th>
+  <th>31  &#9   26</th>
   <th>25     21</th>
   <th>20     16</th>
   <th>15     11</th>
@@ -48,6 +48,7 @@ R-type:
     <td>opcode</td>
   <td>rs</td>
   <td>rt</td>
+    <td>rd</td>
   <td>shamt</td>
   <td>funct</td>
   </tr>
